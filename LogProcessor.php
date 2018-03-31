@@ -4,24 +4,21 @@ class LogProcessor
 {
     public static function processLogFiles($logFiles)
     {
-        self::outputLogData(array_map(file, $logFiles));
+        self::outputLogData(array_map('file', $logFiles));
     }
 
-    /*protected static function outputLogData($data)
+    protected static function outputLogData($data)
     {
-
-    }*/
-
-    protected static function outputLogData( $array ) {
-
-        foreach( $array as $row ) {
-            $i = 0;
-            foreach($row as $v){
-                $new_array[] = $row[$i];
-                $i++;
-            }
-
+        foreach ($data as $d){
+            array_filter($d, function ($t) {
+                return self::test(explode(" " , $t));
+            });
         }
-        print_r(array_count_values( $new_array ));
+    }
+
+
+    protected static function test($data)
+    {
+        print_r($data);
     }
 }
